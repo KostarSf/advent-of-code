@@ -1,0 +1,19 @@
+{
+  "name": "advent-of-code",
+  "module": "src/index.tsx",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun run src/index.tsx"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.8.4",
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
