@@ -59,7 +59,7 @@ const countPossibleSequences = (matrix: WordMatrix, word: string) => {
 
     for (let y = 0; y < matrix.height; y++) {
         for (let x = 0; x < matrix.width; x++) {
-            const sequences = checkPositionForSequences(matrix, word, [y, x]);
+            const sequences = findValidSequencesForPosition(matrix, word, [y, x]);
             allSequences.push(...sequences);
         }
     }
@@ -68,7 +68,7 @@ const countPossibleSequences = (matrix: WordMatrix, word: string) => {
 };
 
 /**
- * Checks a specific position in the matrix for valid word sequences.
+ * Finds all valid word sequences starting from a specific position in the matrix.
  * First verifies that the position contains the first character of the word,
  * then generates all possible directional sequences and validates each one.
  *
@@ -78,7 +78,7 @@ const countPossibleSequences = (matrix: WordMatrix, word: string) => {
  * @param x - The column index of the starting position
  * @returns Array of valid coordinate sequences that spell the word
  */
-const checkPositionForSequences = (
+const findValidSequencesForPosition = (
     matrix: WordMatrix,
     word: string,
     [y, x]: [y: number, x: number]
