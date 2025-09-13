@@ -37,11 +37,26 @@ bun install
 
 ### Running Solutions
 
+**Interactive Mode:**
 ```bash
 bun start
 ```
-
 This will launch the interactive TUI where you can select which day's solution to run.
+
+**Direct CLI Mode:**
+```bash
+bun run src/index.tsx --day 4 --part 2
+```
+Run a specific day and part directly without the interactive interface.
+
+- `--day X`: Specify the day number (required)
+- `--part Y`: Specify the part number (optional, defaults to 2 if omitted)
+
+Examples:
+```bash
+bun run src/index.tsx --day 3 --part 1    # Run Day 3, Part 1
+bun run src/index.tsx --day 4              # Run Day 4, Part 2 (default)
+```
 
 ## Creating New Day Solutions
 
@@ -78,6 +93,7 @@ The TUI will automatically discover and include your new solution in the selecti
 
 - `bun start` - Launch the interactive TUI
 - `bun run src/index.tsx` - Direct execution (same as start)
+- `bun run src/index.tsx --day X --part Y` - Run specific day and part directly
 
 ## Dependencies
 
