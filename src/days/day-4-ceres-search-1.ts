@@ -1,7 +1,7 @@
 export const name = "Day 4: Ceres Search (pt. 1)";
 
 export default async (input: string) => {
-    const count = coundWordOccurances(input, "XMAS");
+    const count = countWordOccurances(input, "XMAS");
     console.log(count);
 };
 
@@ -13,13 +13,13 @@ export default async (input: string) => {
  * @param word - The word to search for in the matrix
  * @returns The total count of valid word sequences found
  */
-const coundWordOccurances = (input: string, word: string) => {
+const countWordOccurances = (input: string, word: string) => {
     const matrix = createWordMatrix(input);
     const sequencesCount = countPossibleSequences(matrix, word);
     return sequencesCount;
 };
 
-interface WordMatrix {
+export interface WordMatrix {
     cells: string[][];
     width: number;
     height: number;
@@ -32,7 +32,7 @@ interface WordMatrix {
  * @param input - The input string with newline-separated rows of characters
  * @returns A WordMatrix object containing the 2D character array and dimensions
  */
-const createWordMatrix = (input: string) => {
+export const createWordMatrix = (input: string) => {
     const rows = input
         .split("\n")
         .filter(Boolean)
@@ -59,7 +59,10 @@ const countPossibleSequences = (matrix: WordMatrix, word: string) => {
 
     for (let y = 0; y < matrix.height; y++) {
         for (let x = 0; x < matrix.width; x++) {
-            const sequences = findValidSequencesForPosition(matrix, word, [y, x]);
+            const sequences = findValidSequencesForPosition(matrix, word, [
+                y,
+                x,
+            ]);
             allSequences.push(...sequences);
         }
     }
@@ -102,6 +105,25 @@ const findValidSequencesForPosition = (
     return validSequences;
 };
 
+export const DIRECTIONS = {
+    /** ↑ */
+    N: 0,
+    /** ↗ */
+    NE: 1,
+    /** → */
+    E: 2,
+    /** ↘ */
+    SE: 3,
+    /** ↓ */
+    S: 4,
+    /** ↙ */
+    SW: 5,
+    /** ← */
+    W: 6,
+    /** ↖ */
+    NW: 7,
+};
+
 /**
  * Generates all possible coordinate sequences of a given length starting from a position.
  * Checks all 8 directions (N, NE, E, SE, S, SW, W, NW) and only includes directions
@@ -111,12 +133,14 @@ const findValidSequencesForPosition = (
  * @param length - The length of the sequence to generate
  * @param y - The starting row index
  * @param x - The starting column index
+ * @param directions - Optional array of direction indices to limit the search to specific directions
  * @returns Array of coordinate sequences, each representing a valid directional path
  */
-const getAvailableIndexesSequences = (
+export const getAvailableIndexesSequences = (
     matrix: WordMatrix,
     length: number,
-    [y, x]: [y: number, x: number]
+    [y, x]: [y: number, x: number],
+    directions?: number[]
 ) => {
     // From top to top-left - clockwise
     const availableDirections = [
@@ -144,7 +168,11 @@ const getAvailableIndexesSequences = (
     const sequences: [y: number, x: number][][] = [];
 
     availableDirections.forEach((direction, index) => {
-        if (!direction || !directionMoves[index]) {
+        if (
+            !direction ||
+            !directionMoves[index] ||
+            (directions && !directions.includes(index))
+        ) {
             return;
         }
 
@@ -170,7 +198,7 @@ const getAvailableIndexesSequences = (
  * @param indexes - Array of [y, x] coordinate pairs representing the sequence
  * @returns True if the sequence of characters matches the word, false otherwise
  */
-const checkSequence = (
+export const checkSequence = (
     matrix: WordMatrix,
     word: string,
     indexes: [y: number, x: number][]
