@@ -1,6 +1,6 @@
 import { join } from "node:path";
 
-export async function readInput(fileName: string) {
+export const readInput = async (fileName: string) => {
     const path = join(import.meta.dir, "..", "inputs", fileName);
 
     try {

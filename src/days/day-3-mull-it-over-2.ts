@@ -1,16 +1,14 @@
-import { readInput } from "../lib/read-input";
 import { findMultiplier } from "./day-3-mull-it-over-1";
 
 export const name = "Day 3: Mull It Over (pt. 2)";
 
-export default async () => {
-    const input = await readInput("day-3.txt");
+export default async (input: string) => {
     const clearedInput = applyConditionals(input);
     const total = findMultiplier(clearedInput);
     console.log(total);
 };
 
-function applyConditionals(input: string) {
+const applyConditionals = (input: string) => {
     const doRegex = /do\(\)/g;
     const dontRegex = /don\'t\(\)/g;
 

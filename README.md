@@ -1,6 +1,6 @@
-# Advent of Code Solutions
+# My Advent of Code Solutions
 
-A TypeScript-based solution repository for [Advent of Code](https://adventofcode.com) challenges, featuring an interactive TUI (Terminal User Interface) for easy day selection and execution.
+A personal TypeScript-based solution repository for [Advent of Code](https://adventofcode.com) challenges, featuring an interactive TUI (Terminal User Interface) for easy day selection and execution.
 
 ## Features
 
@@ -9,6 +9,7 @@ A TypeScript-based solution repository for [Advent of Code](https://adventofcode
 - 📁 **Organized Structure**: Clean separation of solutions, inputs, and utilities
 - 🔧 **Type Safety**: Full TypeScript support with Zod validation
 - 📝 **Automatic Discovery**: Automatically finds and lists all available day solutions
+- 📄 **Auto Input Loading**: Input files are automatically loaded and passed to your day functions
 
 ## Project Structure
 
@@ -50,13 +51,12 @@ To add a new day solution:
 2. Export a `name` string and a `default` async function:
 
 ```typescript
-import { readInput } from "../lib/read-input";
-
 export const name = "Day X: Your Description";
 
-export default async () => {
-    const input = await readInput("day-X.txt");
-    
+export default async (input: string) => {
+    // Input content is automatically loaded from day-X.txt
+    // and passed as the first parameter
+
     // Your solution logic here
     const result = solvePart(input);
     console.log(result);
@@ -70,7 +70,9 @@ export function solvePart(input: string) {
 
 3. Add the corresponding input file to `src/inputs/day-X.txt`
 
-The TUI will automatically discover and include your new solution in the selection menu.
+The TUI will automatically discover and include your new solution in the selection menu. The input file content will be automatically loaded and passed to your function as the first parameter.
+
+**Input File Naming**: The system automatically looks for input files matching your day prefix (e.g., `day-4.txt` for `day-4-some-description.ts`). If no input file is found, an empty string is passed and a warning is displayed.
 
 ## Available Scripts
 
@@ -90,10 +92,10 @@ The TUI will automatically discover and include your new solution in the selecti
 - **Validation**: Zod for runtime type safety
 - **TUI**: Inquirer.js for interactive prompts
 
-## Contributing
+## Personal Notes
 
-Feel free to add new solutions, improve existing ones, or enhance the tooling. The modular structure makes it easy to add new days without affecting existing code.
+This is my personal Advent of Code journey! The modular structure makes it easy to add new days and experiment with different approaches to solving the challenges.
 
 ## License
 
-This project is for educational purposes as part of Advent of Code participation.
+MIT License - This project is for educational purposes as part of Advent of Code participation.
