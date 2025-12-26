@@ -1,4 +1,5 @@
 interface CliArgs {
+    year?: number;
     day?: number;
     part?: number;
 }
@@ -10,7 +11,13 @@ export const parseCliArgs = (): CliArgs => {
     for (let i = 0; i < args.length; i++) {
         const arg = args[i];
 
-        if (arg === '--day' && i + 1 < args.length) {
+        if (arg === '--year' && i + 1 < args.length) {
+            const yearValue = parseInt(args[i + 1] ?? "", 10);
+            if (!isNaN(yearValue)) {
+                result.year = yearValue;
+            }
+            i++; // Skip the next argument since we consumed it
+        } else if (arg === '--day' && i + 1 < args.length) {
             const dayValue = parseInt(args[i + 1] ?? "", 10);
             if (!isNaN(dayValue)) {
                 result.day = dayValue;
