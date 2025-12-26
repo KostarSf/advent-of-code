@@ -1,4 +1,4 @@
-export const name = "Day 1: Secret Entrance";
+export const name = "Day 1: Secret Entrance (pt. 1)";
 
 export default async (input: string) => {
     const sequence = parseSequence(input);
@@ -15,22 +15,30 @@ const parseSequence = (input: string) =>
 const decodePassword = (sequence: number[]) => {
     let value = 50;
     let zeroesCount = 0;
-    console.log(value);
     for (const step of sequence) {
+        const oldValue = value.toString().padStart(3, " ");
         value = rotateValue(value, step);
-        const displayStep = step > 0 ? `+${step}` : step.toString();
         if (value === 0) {
             zeroesCount++;
-            console.log("0", "\t ", displayStep, "\t <-- ", zeroesCount, "total");
-        } else {
-            console.log(value, "\t ", displayStep)
         }
+
+        const displayStep = step > 0 ? `+${step}` : step.toString();
+        const displayZeroesCount =
+            value === 0 ? `\t <-- ${zeroesCount} total` : "";
+
+        console.log(
+            `${oldValue} ${displayStep.padEnd(4, " ")} =`,
+            value,
+            "\t ",
+            displayZeroesCount
+        );
     }
     return zeroesCount;
-}
+};
 
 const rotateValue = (value: number, step: number) => {
     const sign = Math.sign(step);
     const absoluteStep = Math.abs(step) % 100;
-    return (value + sign * absoluteStep) % 100;
-}
+    const newValue = (value + sign * absoluteStep + 100) % 100;
+    return newValue;
+};
